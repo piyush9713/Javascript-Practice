@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Throttling</title>
+</head>
+
+<body>
+  <h1>Throttling</h1>
+  <script>
+    function throttle(func, interval) {
+      let timer = null;
+      return function (...args) {
+        if (timer) return;
+        func.apply(this, args)
+        timer = setTimeout(() => {
+          timer = null
+        }, interval)
+      }
+    }
+
+    function handleResize() {
+      console.log(`window resize to: ${window.innerWidth} x ${window.innerHeight}`)
+    }
+
+    const throttleResize = throttle(handleResize, 1000)
+
+    window.addEventListener("resize", throttleResize)
+
+  </script>
+</body>
+
+</html>
